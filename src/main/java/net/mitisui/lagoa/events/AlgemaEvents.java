@@ -7,27 +7,24 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.mitisui.lagoa.Config;
-import net.mitisui.lagoa.Lagoa;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = Lagoa.MODID)
 public class AlgemaEvents {
 
     private static final Map<UUID, ArrestData> ARRESTED_PLAYERS = new HashMap<>();
@@ -72,6 +69,29 @@ public class AlgemaEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void onRightClickGround(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getLevel().isClientSide) return;
+
+        ItemStack item = event.getItemStack();
+        if (item.hasTag() && item.getTag().getBoolean("IsAlgema")) {
+            CompoundTag nbt = item.getTag();
+
+            if (nbt.contains("PrisonerUUID")) {
+                UUID targetUUID = nbt.getUUID("PrisonerUUID");
+                ServerPlayer officer = (ServerPlayer) event.getEntity();
+                ServerPlayer target = officer.getServer().getPlayerList().getPlayer(targetUUID);
+
+                BlockPos posAlvo = event.getPos().above();
+                String dimensaoAtual = officer.level().dimension().location().toString();
+
+                handleTeleport(officer, target, posAlvo, dimensaoAtual);
+
+                event.setCanceled(true);
+            }
+        }
+    }
+
     public static void handleArrest(ServerPlayer officer, ServerPlayer target) {
         if (target == null) {
             officer.sendSystemMessage(Component.literal("§cJogador não encontrado"));
@@ -83,7 +103,7 @@ public class AlgemaEvents {
             return;
         }
 
-        // Registrar prisão
+        // Registra a prisão
         ARRESTED_PLAYERS.put(target.getUUID(), new ArrestData(officer.getUUID()));
 
         // Aplicar efeitos
@@ -158,7 +178,7 @@ public class AlgemaEvents {
             return;
         }
 
-        // Teleportar para a dimensão e posição corretas
+        // Teleporta para a dimensão e coordenadas corretas
         ResourceKey<Level> dimensionKey = ResourceKey.create(
                 net.minecraft.core.registries.Registries.DIMENSION,
                 new ResourceLocation(dimensionStr)
@@ -251,7 +271,7 @@ public class AlgemaEvents {
             return; // Deixa o outro handler cuidar disso
         }
 
-        // Agora verifica se deve bloquear a interação
+        // verifica se deve bloquear a interação
         if (Config.PREVENT_INTERACTIONS.get() && event.getEntity() instanceof ServerPlayer player) {
             if (ARRESTED_PLAYERS.containsKey(player.getUUID())) {
                 event.setCanceled(true);
@@ -260,6 +280,7 @@ public class AlgemaEvents {
         }
     }
 
+    // caso o player deslogue volte ao normal (caso ele use um stasis de peróla do ender pode utilizar disso para fugir)
     public static void onPlayerLogout(Player player) {
         ARRESTED_PLAYERS.remove(player.getUUID());
     }
