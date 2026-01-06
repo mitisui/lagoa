@@ -15,7 +15,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.mitisui.lagoa.commands.AlgemaCommands;
+import net.mitisui.lagoa.commands.PistolaCommands;
 import net.mitisui.lagoa.commands.WebLoggerCommands;
+import net.mitisui.lagoa.events.PistolaEvents;
 import net.mitisui.lagoa.logger.LogWriter;
 import net.mitisui.lagoa.logger.ServerLoggerUtils;
 import org.slf4j.Logger;
@@ -31,7 +33,11 @@ public class Lagoa {
         Config.register();
 
         MinecraftForge.EVENT_BUS.register(this);
+
+
+
         MinecraftForge.EVENT_BUS.register(ServerLoggerUtils.class);
+        MinecraftForge.EVENT_BUS.register(PistolaEvents.class);
     }
 
     @SubscribeEvent
@@ -53,6 +59,8 @@ public class Lagoa {
 
         AlgemaCommands.registrar(lagoaRoot);
         WebLoggerCommands.registrar(lagoaRoot);
+        PistolaCommands.registrar(lagoaRoot);
+
         dispatcher.register(lagoaRoot);
 
         Lagoa.LOGGER.info("Comandos Lagoa registrados com o prefixo /lagoa");

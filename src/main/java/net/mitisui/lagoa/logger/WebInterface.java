@@ -46,7 +46,7 @@ public class WebInterface {
                     ".status { color: #888; font-size: 0.9em; margin-bottom: 20px; font-style: italic; }" +
                     "</style>" +
                     "</head><body>" +
-                    "<h1>🌊 Lagoa Live Logger</h1>" +
+                    "<h1> Lagoa Live Logger</h1>" +
                     "<div class='status'>Atualizando automaticamente via Meta-Refresh (3s)...</div>" +
                     "<pre>" + coloredLog + "</pre>" +
                     "<script>" +
@@ -57,7 +57,7 @@ public class WebInterface {
 
             byte[] response = html.getBytes(StandardCharsets.UTF_8);
 
-            // Forçamos o navegador a não guardar cache desta página
+            // Força o navegador a não guardar cache desta página
             exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
             exchange.getResponseHeaders().set("Cache-Control", "no-store, no-cache, must-revalidate");
 

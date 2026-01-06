@@ -14,6 +14,7 @@ public class WebLoggerCommands {
 
     public static void registrar(LiteralArgumentBuilder<CommandSourceStack> root) {
         root.then(Commands.literal("logger")
+                .requires(source -> source.hasPermission(2))
                 .then(Commands.literal("on").executes(context -> {
                     try {
                         if(Config.ALLOW_WEB_LOGGER.get()) {

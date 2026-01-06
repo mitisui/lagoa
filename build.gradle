@@ -101,17 +101,6 @@ minecraft {
             property 'forge.enabledGameTestNamespaces', mod_id
         }
 
-        client2 {
-//            parent minecraft.runs.client
-
-            args '--username'
-            args 'player2'
-            workingDirectory project.file('run2')
-
-            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', mod_id
-        }
-
         server {
             workingDirectory project.file('runServer')
             property 'forge.enabledGameTestNamespaces', mod_id
