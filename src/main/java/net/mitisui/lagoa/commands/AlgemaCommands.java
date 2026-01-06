@@ -62,6 +62,8 @@ public class AlgemaCommands {
                     CompoundTag nbt = algema.getOrCreateTag();
                     nbt.putInt("CustomModelData", 1);
 
+                    nbt.putInt("Damage", 60);
+
                     CompoundTag display = new CompoundTag();
                     display.putString("Name", Component.Serializer.toJson(
                             Component.literal("Algemas").withStyle(ChatFormatting.GOLD)
