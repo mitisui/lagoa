@@ -35,6 +35,12 @@ public class Config {
     public static final ForgeConfigSpec.BooleanValue PREVENT_BLOCK_PLACE;
     public static final ForgeConfigSpec.BooleanValue PREVENT_INTERACTIONS;
     public static final ForgeConfigSpec.IntValue MAX_ARREST_TIME; // Em minutos, 0 = sem limite
+    public static final ForgeConfigSpec.BooleanValue TELEPORT_ON_BLOCK_BREAK;
+    public static final ForgeConfigSpec.DoubleValue MAX_DISTANCE_BEFORE_PULL;
+
+//     itens globais
+    public static final ForgeConfigSpec.BooleanValue ENABLE_TELEFONE;
+    public static final ForgeConfigSpec.BooleanValue ENABLE_CORNETAS;
 
 
     public static final ForgeConfigSpec SPEC;
@@ -128,9 +134,29 @@ public class Config {
                 .comment("Tempo máximo de prisão em minutos (0 = sem limite)")
                 .defineInRange("max_arrest_time", 0, 0, 100000);
 
+        TELEPORT_ON_BLOCK_BREAK = BUILDER
+                .comment("Teleporta o preso para o oficial ao tentar quebrar blocos")
+                .define("teleportOnBlockBreak", true);
+
+        MAX_DISTANCE_BEFORE_PULL = BUILDER
+                .comment("Distância máxima antes de puxar automaticamente")
+                .defineInRange("maxDistanceBeforePull", 20.0, 5.0, 100.0);
+
         BUILDER.pop();
 
+//       Itens globais
 
+        BUILDER.push("Configurações itens globais");
+
+        ENABLE_TELEFONE = BUILDER
+                .comment("Permite a criação do celular")
+                .define("enableTelefone", true);
+
+        ENABLE_CORNETAS = BUILDER
+                .comment("Permite a criação das cornetas")
+                        .define("enableCorneta", true);
+
+        BUILDER.pop();
 
         SPEC = BUILDER.build();
     }

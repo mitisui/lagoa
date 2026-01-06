@@ -17,6 +17,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.mitisui.lagoa.commands.AlgemaCommands;
 import net.mitisui.lagoa.commands.PistolaCommands;
 import net.mitisui.lagoa.commands.WebLoggerCommands;
+import net.mitisui.lagoa.events.AlgemaEvents;
+import net.mitisui.lagoa.events.GlobalEvents;
 import net.mitisui.lagoa.events.PistolaEvents;
 import net.mitisui.lagoa.logger.LogWriter;
 import net.mitisui.lagoa.logger.ServerLoggerUtils;
@@ -34,10 +36,10 @@ public class Lagoa {
 
         MinecraftForge.EVENT_BUS.register(this);
 
-
-
         MinecraftForge.EVENT_BUS.register(ServerLoggerUtils.class);
         MinecraftForge.EVENT_BUS.register(PistolaEvents.class);
+        MinecraftForge.EVENT_BUS.register(AlgemaEvents.class);
+        MinecraftForge.EVENT_BUS.register(GlobalEvents.class);
     }
 
     @SubscribeEvent

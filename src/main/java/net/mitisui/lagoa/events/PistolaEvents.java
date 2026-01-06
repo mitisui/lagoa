@@ -20,12 +20,10 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.mitisui.lagoa.Config;
 import net.mitisui.lagoa.Lagoa;
 
-@Mod.EventBusSubscriber(modid = Lagoa.MODID)
 public class PistolaEvents {
 
     @SubscribeEvent
