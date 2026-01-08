@@ -41,6 +41,7 @@ public class Config {
 //     itens globais
     public static final ForgeConfigSpec.BooleanValue ENABLE_TELEFONE;
     public static final ForgeConfigSpec.BooleanValue ENABLE_CORNETAS;
+    public static final ForgeConfigSpec.IntValue CORNETA_CUSTO;
 
 
     public static final ForgeConfigSpec SPEC;
@@ -154,7 +155,11 @@ public class Config {
 
         ENABLE_CORNETAS = BUILDER
                 .comment("Permite a criação das cornetas")
-                        .define("enableCorneta", true);
+                .define("enableCorneta", true);
+
+        CORNETA_CUSTO = BUILDER
+                .comment("Custo de criação das cornetas na bigornas (nível de xp)")
+                .defineInRange("cornetaCusto", 20,5,10000);
 
         BUILDER.pop();
 
