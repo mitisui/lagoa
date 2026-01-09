@@ -111,8 +111,8 @@ public class AlgemaEvents {
             target.addEffect(new MobEffectInstance(MobEffects.GLOWING, Integer.MAX_VALUE, 0, false, false));
         }
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, Integer.MAX_VALUE, getSlownessLevel(), false, false));
+        target.addEffect(new MobEffectInstance(MobEffects.UNLUCK, Integer.MAX_VALUE, 1, false, false));
 
-        // Salvar UUID e nome do prisioneiro no NBT do item
         ItemStack algema = officer.getMainHandItem();
         CompoundTag nbt = algema.getOrCreateTag();
         nbt.putUUID("PrisonerUUID", target.getUUID());
@@ -147,6 +147,7 @@ public class AlgemaEvents {
         // Remover efeitos
         target.removeEffect(MobEffects.GLOWING);
         target.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+        target.removeEffect(MobEffects.UNLUCK);
 
         // Remover dados do NBT
         ItemStack algema = officer.getMainHandItem();
@@ -178,7 +179,6 @@ public class AlgemaEvents {
             return;
         }
 
-        // Teleporta para a dimensão e coordenadas corretas
         ResourceKey<Level> dimensionKey = ResourceKey.create(
                 net.minecraft.core.registries.Registries.DIMENSION,
                 new ResourceLocation(dimensionStr)

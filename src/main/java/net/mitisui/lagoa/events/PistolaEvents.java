@@ -41,7 +41,7 @@ public class PistolaEvents {
 
         if (!Config.ENABLE_PISTOLA.get()) {
             player.displayClientMessage(
-                    net.minecraft.network.chat.Component.literal("§cPistola desabilitada no servidor!"),
+                    Component.literal("§cPistola desabilitada no servidor!"),
                     true
             );
             return;

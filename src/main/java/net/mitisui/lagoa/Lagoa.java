@@ -8,20 +8,24 @@ import net.minecraft.commands.Commands;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.mitisui.lagoa.commands.AlgemaCommands;
-import net.mitisui.lagoa.commands.PistolaCommands;
-import net.mitisui.lagoa.commands.WebLoggerCommands;
+import net.mitisui.lagoa.commands.*;
 import net.mitisui.lagoa.events.AlgemaEvents;
 import net.mitisui.lagoa.events.GlobalEvents;
 import net.mitisui.lagoa.events.PistolaEvents;
+import net.mitisui.lagoa.events.SwordEvents;
 import net.mitisui.lagoa.logger.LogWriter;
 import net.mitisui.lagoa.logger.ServerLoggerUtils;
+import net.mitisui.lagoa.mechanics.TeleportSystem;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 @Mod(Lagoa.MODID)
@@ -36,10 +40,12 @@ public class Lagoa {
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        MinecraftForge.EVENT_BUS.register(ServerLoggerUtils.class);
         MinecraftForge.EVENT_BUS.register(PistolaEvents.class);
         MinecraftForge.EVENT_BUS.register(AlgemaEvents.class);
         MinecraftForge.EVENT_BUS.register(GlobalEvents.class);
+        MinecraftForge.EVENT_BUS.register(SwordEvents.class);
+
+        MinecraftForge.EVENT_BUS.register(ServerLoggerUtils.class);
     }
 
     @SubscribeEvent
@@ -54,6 +60,13 @@ public class Lagoa {
     }
 
     @SubscribeEvent
+    public void onServerTick(TickEvent.ServerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            TeleportSystem.tick();
+        }
+    }
+
+    @SubscribeEvent
     public void onRegisterCommands(RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 
@@ -62,6 +75,8 @@ public class Lagoa {
         AlgemaCommands.registrar(lagoaRoot);
         WebLoggerCommands.registrar(lagoaRoot);
         PistolaCommands.registrar(lagoaRoot);
+        SwordsCommands.registrar(lagoaRoot);
+        TeleportCommands.registrar(lagoaRoot);
 
         dispatcher.register(lagoaRoot);
 
