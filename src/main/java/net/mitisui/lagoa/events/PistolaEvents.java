@@ -41,7 +41,7 @@ public class PistolaEvents {
 
         if (!Config.ENABLE_PISTOLA.get()) {
             player.displayClientMessage(
-                    net.minecraft.network.chat.Component.literal("§cPistola desabilitada no servidor!"),
+                    Component.literal("§cPistola desabilitada no servidor!"),
                     true
             );
             return;
@@ -94,13 +94,7 @@ public class PistolaEvents {
                 }
             }
 
-            shooter.displayClientMessage(
-                    Component.literal(
-                            "§cAcertou " + target.getName().getString() + "! §7(-" + damage + " HP)"
-                    ), true
-            );
-
-            level.sendParticles(ParticleTypes.DAMAGE_INDICATOR,
+            level.sendParticles(ParticleTypes.FLASH,
                     target.getX(), target.getY() + target.getBbHeight() / 2, target.getZ(),
                     10, 0.2, 0.2, 0.2, 0.1
             );

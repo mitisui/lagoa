@@ -10,6 +10,7 @@ import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -28,7 +29,8 @@ public class ServerLoggerUtils {
     // [A5A] - Invocação de Bosses (Wither e Ender Dragon)
     // [A6A] - Mob com Nametag
     // [B1B] - Login e Logout
-    // [C1C] - Comandos
+    // [C1C] - Comandos executados por Players
+    // [C2C] - Comandos executados por Command Blocks
 
     @SubscribeEvent
     public static void onServerStarting(ServerStartingEvent event) {
@@ -45,43 +47,30 @@ public class ServerLoggerUtils {
         Entity attacker = source.getEntity();
 
         String deathCause = source.getLocalizedDeathMessage(victim).getString();
-
-        String pos = String.format("%.0f, %.0f, %.0f", victim.getX(), victim.getY(), victim.getZ());
+        String pos = formatPosition(victim);
         String dim = victim.level().dimension().location().toString();
 
-        // [A1A / A2A]
+        // [A1A / A2A] - Mortes de Players
         if (victim instanceof Player playerVictim) {
             if (attacker instanceof Player playerAttacker && playerAttacker != playerVictim) {
-                LogWriter.write("[A1A] " + playerAttacker.getName().getString() + " matou " + playerVictim.getName().getString() + " {" + pos + "} {" + dim + "}");
+                LogWriter.write("[A1A] " + playerAttacker.getName().getString() + " matou " +
+                        playerVictim.getName().getString() + " {" + pos + "} {" + dim + "}");
             } else {
                 LogWriter.write("[A2A] " + deathCause + " {" + pos + "} {" + dim + "}");
             }
             return;
         }
 
-        // [A3A / A4A]
+        // [A3A / A4A] - Mortes de Pets
         if (victim instanceof OwnableEntity pet && pet.getOwnerUUID() != null) {
-            UUID ownerUUID = pet.getOwnerUUID();
-            Player ownerPlayer = victim.level().getServer() != null ?
-                    victim.level().getServer().getPlayerList().getPlayer(ownerUUID) : null;
-
-            String ownerName = (ownerPlayer != null) ? ownerPlayer.getName().getString() : "Offline";
-            String petName = victim.hasCustomName() ? victim.getCustomName().getString() : victim.getType().getDescriptionId();
-
-            if (attacker instanceof Player p) {
-                // [A4A]
-                LogWriter.write("[A4A] " + p.getName().getString() + " matou o pet [" + petName + "] de " +
-                        ownerName + " (" + ownerUUID + ") em {" + pos + "}");
-            } else {
-                // [A3A]
-                LogWriter.write("[A3A] Pet [" + petName + "] de " + ownerName + " (" + ownerUUID + ") morreu: " + deathCause + " {" + pos + "}");
-            }
+            handlePetDeath(pet, victim, attacker, deathCause, pos);
             return;
         }
 
-        // [A6A]
+        // [A6A] - Mobs com Nametag
         if (victim.hasCustomName()) {
-            LogWriter.write("[A6A] Mob Nomeado [" + victim.getCustomName().getString() + "] morreu: " + deathCause + " em {" + pos + "} {" + dim + "}");
+            LogWriter.write("[A6A] Mob Nomeado [" + victim.getCustomName().getString() +
+                    "] morreu: " + deathCause + " em {" + pos + "} {" + dim + "}");
         }
     }
 
@@ -92,55 +81,128 @@ public class ServerLoggerUtils {
 
         boolean isBoss = entity instanceof WitherBoss ||
                 entity instanceof EnderDragon ||
-                entity.getType().is(TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("c", "bosses"))); // no java 21 marca como erro -> é só ignorar que seria o mesmo que ResourveLocation.parse ou fromnameandpath
+                entity.getType().is(TagKey.create(Registries.ENTITY_TYPE,
+                        new ResourceLocation("c", "bosses")));
 
         if (isBoss) {
-            String posicao = String.format("%.0f, %.0f, %.0f", entity.getX(), entity.getY(), entity.getZ());
+            String posicao = formatPosition(entity);
             String dimensao = entity.level().dimension().location().toString();
+            double radius = getMaxWitherRadius();
 
             List<String> playersProximos = event.getLevel().players().stream()
-                    .filter(p -> p.distanceToSqr(entity) <= (getMaxWitherRadius() * getMaxWitherRadius())) // agora é configurável!
+                    .filter(p -> p.distanceToSqr(entity) <= (radius * radius))
                     .map(p -> p.getName().getString())
                     .toList();
 
-            String ListaPlayersProximos = playersProximos.isEmpty() ? "Nenhum detectado" : String.join(", ", playersProximos);
+            String listaPlayers = playersProximos.isEmpty() ?
+                    "Nenhum detectado" : String.join(", ", playersProximos);
 
             LogWriter.write("[A5A] Boss Invocado: " + entity.getName().getString() +
-                    " em {" + posicao + "} {" + dimensao + "} | Players na área de " + getMaxWitherRadius()/getMaxWitherRadius() + " blocos: [" + ListaPlayersProximos + "]");
+                    " em {" + posicao + "} {" + dimensao + "} | Players na área de " +
+                    (int)radius + " blocos: [" + listaPlayers + "]");
         }
     }
 
-    // [B1B / B2B]
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         Entity player = event.getEntity();
-        String dimensao = player.level().dimension().location().toString();
+        String pos = formatPosition(player);
+        String dim = player.level().dimension().location().toString();
 
-        String posicao = String.format("%.0f, %.0f, %.0f", player.getX(), player.getY(), player.getZ());
-        LogWriter.write("[B1B] LOGIN: " + player.getName().getString() + " em {" + posicao + "}" + " em {" + dimensao + "}" );
+        LogWriter.write("[B1B] LOGIN: " + player.getName().getString() +
+                " em {" + pos + "} {" + dim + "}");
     }
 
     @SubscribeEvent
-    public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent evento) {
-        Entity p = evento.getEntity();
-        String posicao = String.format("%.0f, %.0f, %.0f", p.getX(), p.getY(), p.getZ());
-        LogWriter.write("[B1B] LOGOUT: " + p.getName().getString() + " em {" + posicao + "}");
+    public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
+        Entity player = event.getEntity();
+        String pos = formatPosition(player);
+        String dim = player.level().dimension().location().toString();
+
+        LogWriter.write("[B1B] LOGOUT: " + player.getName().getString() +
+                " em {" + pos + "} {" + dim + "}");
     }
 
-    // C1C
     @SubscribeEvent
-    public static void onCommand(CommandEvent evento) {
-        String comando = evento.getParseResults().getReader().getString();
-        String player = evento.getParseResults().getContext().getSource().getTextName();
+    public static void onCommand(CommandEvent event) {
+        try {
+            String comando = event.getParseResults().getReader().getString();
+            CommandSourceStack source = event.getParseResults().getContext().getSource();
 
-        if (!comando.startsWith("/msg") && !comando.startsWith("/tell")) {
-            LogWriter.write("[C1C] COMANDO: " + player + " executou [" + comando + "]");
+            // Ignora mensagens privadas
+            if (comando.startsWith("/msg") || comando.startsWith("/tell") ||
+                    comando.startsWith("/w") || comando.startsWith("/whisper")) {
+                return;
+            }
+                // Verifica se é um player real
+            if (Config.PLAYER_COMMANDS_ENABLED.get()) {
+                if (source.getEntity() instanceof Player player) {
+                    String pos = formatPosition(player);
+                    String dim = player.level().dimension().location().toString();
+
+                    LogWriter.write("[C1C] COMANDO PLAYER: " + player.getName().getString() +
+                            " executou [" + comando + "] em {" + pos + "} {" + dim + "}");
+                }
+            }
+            // Command Block ou outra fonte
+            else {
+                if (Config.SERVER_COMMANDS_ENABLED.get()) {
+                    String sourceName = source.getTextName();
+                    String pos = formatPosition(source.getPosition());
+                    String dim = source.getLevel() != null ?
+                            source.getLevel().dimension().location().toString() : "unknown";
+
+                    // Detecta tipo de origem
+                    String sourceType = "DESCONHECIDO";
+                    if (sourceName.contains("Command Block") || sourceName.contains("commandBlock")) {
+                        sourceType = "COMMAND BLOCK";
+                    } else if (sourceName.contains("Server") || sourceName.equals("Server")) {
+                        sourceType = "SERVIDOR";
+                    } else if (sourceName.contains("Function")) {
+                        sourceType = "FUNCTION";
+                    }
+
+                    LogWriter.write("[C2C] COMANDO " + sourceType + ": [" + comando +
+                            "] executado por [" + sourceName + "] em {" + pos + "} {" + dim + "}");
+                }
+            }
+        } catch (Exception e) {
+            LogWriter.write("[ERRO] Falha ao registrar comando: " + e.getMessage());
         }
     }
 
-    // gets
+    // ===================== MÉTODOS AUXILIARES =====================
 
-    public static double getMaxWitherRadius() {
-        return Config.MAX_WITHER_RDIUS.get() * Config.MAX_WITHER_RDIUS.get();
+    private static void handlePetDeath(OwnableEntity pet, LivingEntity victim,
+                                       Entity attacker, String deathCause, String pos) {
+        UUID ownerUUID = pet.getOwnerUUID();
+        Player ownerPlayer = victim.level().getServer() != null ?
+                victim.level().getServer().getPlayerList().getPlayer(ownerUUID) : null;
+
+        String ownerName = (ownerPlayer != null) ?
+                ownerPlayer.getName().getString() : "Offline";
+        String petName = victim.hasCustomName() ?
+                victim.getCustomName().getString() : victim.getType().getDescriptionId();
+
+        if (attacker instanceof Player playerAttacker) {
+            LogWriter.write("[A4A] " + playerAttacker.getName().getString() +
+                    " matou o pet [" + petName + "] de " + ownerName +
+                    " (" + ownerUUID + ") em {" + pos + "}");
+        } else {
+            LogWriter.write("[A3A] Pet [" + petName + "] de " + ownerName +
+                    " (" + ownerUUID + ") morreu: " + deathCause + " {" + pos + "}");
+        }
+    }
+
+    private static String formatPosition(Entity entity) {
+        return String.format("%.0f, %.0f, %.0f", entity.getX(), entity.getY(), entity.getZ());
+    }
+
+    private static String formatPosition(net.minecraft.world.phys.Vec3 pos) {
+        return String.format("%.0f, %.0f, %.0f", pos.x, pos.y, pos.z);
+    }
+
+    private static double getMaxWitherRadius() {
+        return Config.MAX_WITHER_RDIUS.get();
     }
 }

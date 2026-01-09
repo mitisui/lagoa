@@ -94,12 +94,12 @@ public class AlgemaEvents {
 
     public static void handleArrest(ServerPlayer officer, ServerPlayer target) {
         if (target == null) {
-            officer.sendSystemMessage(Component.literal("§cJogador não encontrado"));
+            officer.displayClientMessage(Component.literal("§cJogador não encontrado"), true);
             return;
         }
 
         if (ARRESTED_PLAYERS.containsKey(target.getUUID())) {
-            officer.sendSystemMessage(Component.literal("§eEste jogador já está preso"));
+            officer.displayClientMessage(Component.literal("§eEste jogador já está preso"), true);
             return;
         }
 
@@ -111,33 +111,33 @@ public class AlgemaEvents {
             target.addEffect(new MobEffectInstance(MobEffects.GLOWING, Integer.MAX_VALUE, 0, false, false));
         }
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, Integer.MAX_VALUE, getSlownessLevel(), false, false));
+        target.addEffect(new MobEffectInstance(MobEffects.UNLUCK, Integer.MAX_VALUE, 1, false, false));
 
-        // Salvar UUID e nome do prisioneiro no NBT do item
         ItemStack algema = officer.getMainHandItem();
         CompoundTag nbt = algema.getOrCreateTag();
         nbt.putUUID("PrisonerUUID", target.getUUID());
         nbt.putString("PrisonerName", target.getName().getString());
 
         // Mensagens
-        officer.sendSystemMessage(Component.literal("§aVocê prendeu " + target.getName().getString() + "!"));
-        target.sendSystemMessage(Component.literal("§cVocê foi preso por " + officer.getName().getString() + "!"));
+        officer.displayClientMessage(Component.literal("§aVocê prendeu " + target.getName().getString() + "!"), true);
+        target.displayClientMessage(Component.literal("§cVocê foi preso por " + officer.getName().getString() + "!"), true);
     }
 
     public static void handleRelease(ServerPlayer officer, ServerPlayer target) {
         if (target == null) {
-            officer.sendSystemMessage(Component.literal("§cJogador não encontrado!"));
+            officer.displayClientMessage(Component.literal("§cJogador não encontrado!"), true);
             return;
         }
 
         ArrestData data = ARRESTED_PLAYERS.get(target.getUUID());
         if (data == null) {
-            officer.sendSystemMessage(Component.literal("§eEste jogador não está preso!"));
+            officer.displayClientMessage(Component.literal("§eEste jogador não está preso!"), true);
             return;
         }
 
         // Verificar se é o oficial que prendeu
         if (!data.officerUUID.equals(officer.getUUID())) {
-            officer.sendSystemMessage(Component.literal("§cApenas o oficial que prendeu pode soltar!"));
+            officer.displayClientMessage(Component.literal("§cApenas o oficial que prendeu pode soltar!"), true);
             return;
         }
 
@@ -147,6 +147,7 @@ public class AlgemaEvents {
         // Remover efeitos
         target.removeEffect(MobEffects.GLOWING);
         target.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+        target.removeEffect(MobEffects.UNLUCK);
 
         // Remover dados do NBT
         ItemStack algema = officer.getMainHandItem();
@@ -157,28 +158,27 @@ public class AlgemaEvents {
         }
 
         // Mensagens
-        officer.sendSystemMessage(Component.literal("§aVocê soltou " + target.getName().getString() + "!"));
-        target.sendSystemMessage(Component.literal("§aVocê foi solto por " + officer.getName().getString() + "!"));
+        officer.displayClientMessage(Component.literal("§aVocê soltou " + target.getName().getString() + "!"),true);
+        target.displayClientMessage(Component.literal("§aVocê foi solto por " + officer.getName().getString() + "!"),true);
     }
 
     public static void handleTeleport(ServerPlayer officer, ServerPlayer target, BlockPos pos, String dimensionStr) {
         if (target == null) {
-            officer.sendSystemMessage(Component.literal("§cJogador não encontrado!"));
+            officer.displayClientMessage(Component.literal("§cJogador não encontrado!"),true);
             return;
         }
 
         ArrestData data = ARRESTED_PLAYERS.get(target.getUUID());
         if (data == null) {
-            officer.sendSystemMessage(Component.literal("§eEste jogador não está preso!"));
+            officer.displayClientMessage(Component.literal("§eEste jogador não está preso!"),true);
             return;
         }
 
         if (!data.officerUUID.equals(officer.getUUID())) {
-            officer.sendSystemMessage(Component.literal("§cApenas o oficial que prendeu pode teleportar!"));
+            officer.displayClientMessage(Component.literal("§cApenas o oficial que prendeu pode teleportar!"),true);
             return;
         }
 
-        // Teleporta para a dimensão e coordenadas corretas
         ResourceKey<Level> dimensionKey = ResourceKey.create(
                 net.minecraft.core.registries.Registries.DIMENSION,
                 new ResourceLocation(dimensionStr)
@@ -189,8 +189,8 @@ public class AlgemaEvents {
             target.teleportTo(targetLevel, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
                     target.getYRot(), target.getXRot());
 
-            officer.sendSystemMessage(Component.literal("§aJogador teleportado!"));
-            target.sendSystemMessage(Component.literal("§eVocê foi teleportado!"));
+            officer.displayClientMessage(Component.literal("§aJogador teleportado!"), true);
+            target.displayClientMessage(Component.literal("§eVocê foi teleportado!"), true);
         }
     }
 
@@ -199,7 +199,7 @@ public class AlgemaEvents {
         if (Config.PREVENT_BLOCK_BREAK.get() && event.getPlayer() instanceof ServerPlayer player) {
             if (ARRESTED_PLAYERS.containsKey(player.getUUID())) {
                 event.setCanceled(true);
-                player.sendSystemMessage(Component.literal("§cVocê não pode quebrar blocos enquanto está preso!"));
+                player.displayClientMessage(Component.literal("§cVocê não pode quebrar blocos enquanto está preso!"), true);
             }
         }
     }
@@ -209,7 +209,7 @@ public class AlgemaEvents {
         if (Config.PREVENT_BLOCK_PLACE.get() && event.getEntity() instanceof ServerPlayer player) {
             if (ARRESTED_PLAYERS.containsKey(player.getUUID())) {
                 event.setCanceled(true);
-                player.sendSystemMessage(Component.literal("§cVocê não pode colocar blocos enquanto está preso!"));
+                player.displayClientMessage(Component.literal("§cVocê não pode colocar blocos enquanto está preso!"), true);
             }
         }
     }
@@ -219,7 +219,7 @@ public class AlgemaEvents {
         if (Config.PREVENT_INTERACTIONS.get() && event.getEntity() instanceof ServerPlayer player) {
             if (ARRESTED_PLAYERS.containsKey(player.getUUID())) {
                 event.setCanceled(true);
-                player.sendSystemMessage(Component.literal("§cAção bloqueada enquanto preso!"));
+                player.displayClientMessage(Component.literal("§cAção bloqueada enquanto preso!"), true);
             }
         }
     }
@@ -229,7 +229,7 @@ public class AlgemaEvents {
         if (Config.PREVENT_ITEM_USE.get() && event.getEntity() instanceof ServerPlayer player) {
             if (ARRESTED_PLAYERS.containsKey(player.getUUID())) {
                 event.setCanceled(true);
-                player.sendSystemMessage(Component.literal("§cVocê não pode usar itens enquanto está preso!"));
+                player.displayClientMessage(Component.literal("§cVocê não pode usar itens enquanto está preso!"), true);
             }
         }
     }
@@ -239,7 +239,7 @@ public class AlgemaEvents {
         if (Config.PREVENT_ITEM_DROP.get() && event.getPlayer() instanceof ServerPlayer player) {
             if (ARRESTED_PLAYERS.containsKey(player.getUUID())) {
                 event.setCanceled(true);
-                player.sendSystemMessage(Component.literal("§cVocê não pode dropar itens enquanto está preso!"));
+                player.displayClientMessage(Component.literal("§cVocê não pode dropar itens enquanto está preso!"), true);
             }
         }
     }
@@ -258,7 +258,7 @@ public class AlgemaEvents {
         if (Config.PREVENT_ATTACK.get() && event.getEntity() instanceof ServerPlayer player) {
             if (ARRESTED_PLAYERS.containsKey(player.getUUID())) {
                 event.setCanceled(true);
-                player.sendSystemMessage(Component.literal("§cVocê não pode atacar enquanto está preso!"));
+                player.displayClientMessage(Component.literal("§cVocê não pode atacar enquanto está preso!"), true);
             }
         }
     }
@@ -268,14 +268,14 @@ public class AlgemaEvents {
         // Primeiro verifica se NÃO é uma algema
         ItemStack item = event.getItemStack();
         if (item.hasTag() && item.getTag().getBoolean("IsAlgema")) {
-            return; // Deixa o outro handler cuidar disso
+            return;
         }
 
         // verifica se deve bloquear a interação
         if (Config.PREVENT_INTERACTIONS.get() && event.getEntity() instanceof ServerPlayer player) {
             if (ARRESTED_PLAYERS.containsKey(player.getUUID())) {
                 event.setCanceled(true);
-                player.sendSystemMessage(Component.literal("§cVocê não pode interagir enquanto está preso!"));
+                player.displayClientMessage(Component.literal("§cVocê não pode interagir enquanto está preso!"),true);
             }
         }
     }
