@@ -39,7 +39,6 @@ public class SwordEvents {
     private static final long SHIELD_DURATION = 60;
 
     private static final Map<UUID, PrisonData> IMPRISONED_PLAYERS = new HashMap<>();
-    private static final long MANA_CURSE_DURATION = 36000; // 30 minutos (36000 ticks)
 
     // Som customizado para o beacon
     private static final SoundEvent BEACON_SOUND = SoundEvent.createVariableRangeEvent(
@@ -74,7 +73,6 @@ public class SwordEvents {
             EntityHitResult hit = getPlayerPOVHitResult(player, Config.E1_RAYCAST_RANGE.get());
 
             if (hit != null && hit.getEntity() instanceof LivingEntity target) {
-                // NOVO: Combo Puxar > Aprisionar > Dano Contínuo + Maldição de Mana
                 performSoulDivision(player, target, event.getLevel());
                 player.getCooldowns().addCooldown(item.getItem(), Config.E1_HOMING_COOLDOWN.get());
             } else {
@@ -216,7 +214,6 @@ public class SwordEvents {
             return false;
         });
 
-        // Remover escudos temporários (código original)
         SHIELD_TIMERS.entrySet().removeIf(entry -> {
             if (currentTime >= entry.getValue()) {
                 BlockPos pos = entry.getKey();
@@ -237,33 +234,49 @@ public class SwordEvents {
 
         AABB area = new AABB(player.blockPosition()).inflate(areaRadius, 100, areaRadius);
 
-        // Dano contínuo em entidades
+        // Dano contínuo E efeitos
         level.getEntities(player, area).forEach(entity -> {
-            if (entity instanceof LivingEntity target) {
+            if (entity instanceof Player target) {
                 target.hurt(level.damageSources().magic(), dano);
+                target.addEffect(new MobEffectInstance(
+                        MobEffects.DARKNESS,
+                        400,
+                        4,
+                        false,
+                        true,
+                        true
+                ));
+
+                target.addEffect(new MobEffectInstance(
+                        MobEffects.UNLUCK,
+                        1200,
+                        0,
+                        false,
+                        true,
+                        true
+                ));
+
                 ((ServerLevel)level).sendParticles(ParticleTypes.FLASH,
                         target.getX(), target.getY() + 1, target.getZ(),
                         5, 0.2, 0.2, 0.2, 0.0);
+                ((ServerLevel)level).sendParticles(ParticleTypes.LARGE_SMOKE,
+                        target.getX(), target.getY() + 1, target.getZ(),
+                        10, 0.3, 0.5, 0.3, 0.02);
             }
         });
 
-        // Transformar APENAS o bloco mais próximo em concreto preto
         BlockPos playerPos = player.blockPosition();
         replaceBlockWithBlackConcrete(level, playerPos.below());
 
-        // Efeito visual de beacon GIGANTE (do topo ao bedrock)
         ServerLevel serverLevel = (ServerLevel) level;
         int worldHeight = level.getMaxBuildHeight();
         int bedrockLevel = level.getMinBuildHeight();
 
-        // Criar raio massivo com escala maior
         for (int y = bedrockLevel; y <= worldHeight; y += 2) {
-            // Partículas centrais (raio principal)
             serverLevel.sendParticles(ParticleTypes.END_ROD,
                     player.getX(), y, player.getZ(),
                     8, 0.1, 0.1, 0.1, 0.01);
 
-            // Partículas externas (efeito de escala maior)
             double scale = 1.5;
             for (int i = 0; i < 4; i++) {
                 double angle = (Math.PI * i) / 2;
@@ -275,7 +288,6 @@ public class SwordEvents {
                         2, 0.2, 0.2, 0.2, 0.02);
             }
 
-            // Partículas adicionais para densidade
             if (y % 4 == 0) {
                 serverLevel.sendParticles(ParticleTypes.ENCHANT,
                         player.getX(), y, player.getZ(),
@@ -283,7 +295,6 @@ public class SwordEvents {
             }
         }
 
-        // Efeito de onda de choque na base
         for (int i = 0; i < 360; i += 10) {
             double angle = Math.toRadians(i);
             double radius = 3.0;
@@ -295,11 +306,10 @@ public class SwordEvents {
                     1, 0, 0, 0, 0);
         }
 
-        // Som customizado do beacon
+
         level.playSound(null, player.blockPosition(), BEACON_SOUND,
                 SoundSource.PLAYERS, 3.0F, 0.8F);
 
-        // Som adicional de impacto
         level.playSound(null, player.blockPosition(), SoundEvents.WITHER_SPAWN,
                 SoundSource.HOSTILE, 2.0F, 0.5F);
     }
