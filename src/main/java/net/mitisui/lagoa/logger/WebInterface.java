@@ -31,12 +31,15 @@ public class WebInterface {
                     .replace("[A1A]", "<span style='color:#ff5555;font-weight:bold;'>[A1A]</span>")
                     .replace("[A2A]", "<span style='color:#ff5555;font-weight:bold;'>[A2A]</span>")
                     .replace("[B1B]", "<span style='color:#55ff55;font-weight:bold;'>[B1B]</span>")
-                    .replace("[C1C]", "<span style='color:#ffff55;font-weight:bold;'>[C1C]</span>");
+                    .replace("[C1C]", "<span style='color:#ffff55;font-weight:bold;'>[C1C]</span>")
+                    .replace("[C2C]", "<span style='color:#ff9900;font-weight:bold;'>[C2C]</span>")
+
+                    .replace("[ERRO]", "<span style='color:#ff0000;font-weight:bold;'>[ERRO]</span>");
 
             // HTML com META REFRESH (comando do navegador) + JAVASCRIPT (backup)
             String html = "<!DOCTYPE html><html><head>" +
                     "<meta charset='UTF-8'>" +
-                    "<meta http-equiv='refresh' content='3'>" + // ATUALIZAÇÃO FORÇADA PELO NAVEGADOR
+                    "<meta http-equiv='refresh' content='3'>" +
                     "<title>Lagoa Live Logger</title>" +
                     "<style>" +
                     "body { background: #0c0c0c; color: #dcdcdc; font-family: 'Segoe UI', Consolas, monospace; padding: 20px; }" +

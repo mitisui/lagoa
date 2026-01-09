@@ -4,33 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="733399ef-c121-4b64-a462-8ffe8df2c784" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/SwordsCommands.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/TeleportCommands.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/SwordEvents.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/mechanics/TeleportSystem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/utils/IronsSpellBlocker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/lagoa.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/lagoa.test.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/runClient.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/runClient2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/runData.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/runGameTestServer.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/runServer.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+    <list default="true" id="733399ef-c121-4b64-a462-8ffe8df2c784" name="Changes" comment="Melhorando o envio de feedback aos players, evitando ao maximo o spam de mensagens do sevidor relizando algum efeito especifico">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Lagoa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Lagoa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/AlgemaCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/AlgemaCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/SwordsCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/SwordsCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/TeleportCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/TeleportCommands.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/AlgemaEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/AlgemaEvents.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/PistolaEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/PistolaEvents.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/SwordEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/SwordEvents.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/logger/LogWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/logger/LogWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/logger/ServerLoggerUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/logger/ServerLoggerUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/logger/WebInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/logger/WebInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +119,7 @@
     &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/yoghj/OneDrive/Documentos/WB Games/lagoa/run2&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/yoghj/OneDrive/Documentos/WB Games/lagoa&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
@@ -144,8 +128,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\yoghj\OneDrive\Documentos\WB Games\lagoa\run2" />
       <recent name="C:\Users\yoghj\OneDrive\Documentos\WB Games\lagoa" />
+      <recent name="C:\Users\yoghj\OneDrive\Documentos\WB Games\lagoa\run2" />
       <recent name="C:\Users\yoghj\OneDrive\Documentos\WB Games\lagoa\src\main\resources\data\lagoa\recipes" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -362,7 +346,23 @@
       <option name="project" value="LOCAL" />
       <updated>1767839719677</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="[🤓] ADICIONADO COMPATIBILIDADE COM O IRON'S SPELLS&#10;&#10;-&gt; Espadas novas e com sons de impacto&#10;&#10;-&gt; sistema de teleporte&#10;&#10;-&gt; compatibilidade e uma forma mais simples de bloquear o ironsspells&#10;&#10;-&gt; algumas modificações aqui e ali que não fazia muito sentido e arrumando alguns comentarios&#10;&#10;-&gt; limpando o build.gradle pra uma forma mais simples de entender">
+      <option name="closed" value="true" />
+      <created>1767989480910</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1767989480910</updated>
+    </task>
+    <task id="LOCAL-00009" summary="JAR E RESOURCE PACK&#10;&#10;&#10;_ uma forma mais simples de testar com o jar ja realizado _">
+      <option name="closed" value="true" />
+      <created>1767989522229</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1767989522229</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -372,6 +372,9 @@
     <MESSAGE value="[️] adicionando pacote de recursos para o cliente" />
     <MESSAGE value="atualizando as propriedades&#10;&#10;e lançamento da versão 0.1 do mod" />
     <MESSAGE value="[] Melhorando código e pacote de textura.&#10;&#10;+ adicionado novas opções na config de custo de xp ao crafitar as cornetas&#10;&#10;+ Lógica das cornetas: o minecraft cria um novo arquivo que seria o call10.ogg que apenas tem no pacote de textura, assim ele não toca o do vanilla e toca apenas com o pacote com o meio do nbt de instrumento e custom_model_data (unica forma de mudar textura é com numeros)" />
-    <option name="LAST_COMMIT_MESSAGE" value="[] Melhorando código e pacote de textura.&#10;&#10;+ adicionado novas opções na config de custo de xp ao crafitar as cornetas&#10;&#10;+ Lógica das cornetas: o minecraft cria um novo arquivo que seria o call10.ogg que apenas tem no pacote de textura, assim ele não toca o do vanilla e toca apenas com o pacote com o meio do nbt de instrumento e custom_model_data (unica forma de mudar textura é com numeros)" />
+    <MESSAGE value="[] ADICIONADO COMPATIBILIDADE COM O IRON'S SPELLS&#10;&#10;-&gt; Espadas novas e com sons de impacto&#10;&#10;-&gt; sistema de teleporte&#10;&#10;-&gt; compatibilidade e uma forma mais simples de bloquear o ironsspells&#10;&#10;-&gt; algumas modificações aqui e ali que não fazia muito sentido e arrumando alguns comentarios&#10;&#10;-&gt; limpando o build.gradle pra uma forma mais simples de entender" />
+    <MESSAGE value="JAR E RESOURCE PACK&#10;&#10;&#10;_ uma forma mais simples de testar com o jar ja realizado _" />
+    <MESSAGE value="Melhorando o envio de feedback aos players, evitando ao maximo o spam de mensagens do sevidor relizando algum efeito especifico" />
+    <option name="LAST_COMMIT_MESSAGE" value="Melhorando o envio de feedback aos players, evitando ao maximo o spam de mensagens do sevidor relizando algum efeito especifico" />
   </component>
 </project>

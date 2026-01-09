@@ -49,7 +49,6 @@ public class TeleportCommands {
                 );
                 return 0;
             }
-
             Vec3 destination = executor.position();
 
             // Iniciar teleporte
@@ -59,11 +58,6 @@ public class TeleportCommands {
             context.getSource().sendSuccess(() ->
                     Component.literal("Trazendo " + target.getName().getString() + "...")
                             .withStyle(ChatFormatting.GREEN), true);
-
-            target.sendSystemMessage(
-                    Component.literal("Você está sendo trazido por " + executor.getName().getString() + "!")
-                            .withStyle(ChatFormatting.YELLOW)
-            );
 
             return 1;
         } catch (Exception e) {

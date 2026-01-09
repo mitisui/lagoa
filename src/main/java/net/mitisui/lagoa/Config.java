@@ -16,6 +16,8 @@ public class Config {
     public static final ForgeConfigSpec.ConfigValue<Integer>  WEB_LOGGER_PORT;
     public static final ForgeConfigSpec.BooleanValue ALLOW_LOGGER;
     public static final ForgeConfigSpec.DoubleValue MAX_WITHER_RDIUS;
+    public static final ForgeConfigSpec.BooleanValue SERVER_COMMANDS_ENABLED;
+    public static final ForgeConfigSpec.BooleanValue PLAYER_COMMANDS_ENABLED;
 
 //    pistola
     public static final ForgeConfigSpec.BooleanValue ENABLE_PISTOLA;
@@ -96,7 +98,15 @@ public class Config {
 
         MAX_WITHER_RDIUS = BUILDER
                 .comment("Tamanho do raio de deteção de players")
-                        .defineInRange("witherRadius", 64.0, 1.0,512.0);
+                .defineInRange("witherRadius", 64.0, 1.0,512.0);
+
+        SERVER_COMMANDS_ENABLED = BUILDER
+                .comment("Ativa ou Desativa a notificação nos logs de comandos do servidor.")
+                .define("serverCommands", false);
+
+        PLAYER_COMMANDS_ENABLED = BUILDER
+                .comment("Ativa ou Desativa a notificação nos logs de comandos dos Players (com op).")
+                .define("serverCommands", true);
 
         BUILDER.pop();
 
@@ -211,7 +221,7 @@ public class Config {
 
         E1_ATAQUE_AOE_DANO = BUILDER
                 .comment("Dano contínuo do ataque AOE em área")
-                .defineInRange("e1AoeDano", 5.0, 0.0, 200000.0);
+                .defineInRange("e1AoeDano", 15.0, 0.0, 200000.0);
 
         E1_ATAQUE_AOE_AREA = BUILDER
                 .comment("Raio da área do ataque AOE (similar ao beacon)")

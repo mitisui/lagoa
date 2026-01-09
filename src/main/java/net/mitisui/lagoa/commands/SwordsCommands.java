@@ -82,8 +82,7 @@ public class SwordsCommands {
 
             context.getSource().sendSuccess(() ->
                     Component.literal("Você recebeu a Katana!")
-                            .withStyle(ChatFormatting.DARK_RED)
-                            .withStyle(ChatFormatting.BOLD), false);
+                            .withStyle(ChatFormatting.DARK_RED), false);
 
             return 1;
         } catch (Exception e) {
@@ -115,7 +114,7 @@ public class SwordsCommands {
             display.putString("Name", Component.Serializer.toJson(
                     Component.literal("Divisor de Almas")
                             .withStyle(ChatFormatting.BLACK)
-                            .withStyle(ChatFormatting.BOLD)
+                            .withStyle(ChatFormatting.OBFUSCATED)
             ));
 
             ListTag lore = new ListTag();
