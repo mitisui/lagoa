@@ -25,6 +25,10 @@ public class Config {
     public static final ForgeConfigSpec.DoubleValue SHOT_DAMAGE;
     public static final ForgeConfigSpec.ConfigValue<String> BULLET_EFFECT;
 
+//    lupa
+    public static final ForgeConfigSpec.BooleanValue ENABLE_LUPA;
+    public static final ForgeConfigSpec.DoubleValue LUPA_RAIO_DE_USO;
+
 
 //    algema
     public static final ForgeConfigSpec.IntValue SLOWNESS_LEVEL;
@@ -134,49 +138,64 @@ public class Config {
 
         BUILDER.pop();
 
+//        lupa
+
+        BUILDER.push("Configurações da Lupa");
+
+        ENABLE_LUPA = BUILDER
+                .comment("Habilita ou não o uso da lupa de investigação (view only)")
+                .define("enableLupa", true);
+
+        LUPA_RAIO_DE_USO = BUILDER
+                .comment("Distância máxima para usar a lupa (em blocos)")
+                .defineInRange("lupaRaioUso", 16.0, 1.0, 2048.0);
+
+        BUILDER.pop();
+
+
 
 //        algema
 
         BUILDER.push("Configurações da Algema");
         SLOWNESS_LEVEL = BUILDER
                 .comment("Nível do efeito de lentidão aplicado ao jogador preso (0-255)")
-                .defineInRange("slowness_level", 150, 0, 255);
+                .defineInRange("slownessLevel", 150, 0, 255);
 
         ENABLE_GLOWING = BUILDER
                 .comment("Ativar efeito de glowing no jogador preso")
-                .define("enable_glowing", true);
+                .define("enableGlowing", true);
 
         PREVENT_ITEM_USE = BUILDER
                 .comment("Impedir jogador preso de usar itens")
-                .define("prevent_item_use", true);
+                .define("preventItemUse", true);
 
         PREVENT_ITEM_PICKUP = BUILDER
                 .comment("Impedir jogador preso de pegar itens do chão")
-                .define("prevent_item_pickup", true);
+                .define("preventItemPickup", true);
 
         PREVENT_ITEM_DROP = BUILDER
                 .comment("Impedir jogador preso de jogar itens no chão")
-                .define("prevent_item_drop", true);
+                .define("preventItemDrop", true);
 
         PREVENT_ATTACK = BUILDER
                 .comment("Impedir jogador preso de atacar")
-                .define("prevent_attack", true);
+                .define("preventAttack", true);
 
         PREVENT_BLOCK_BREAK = BUILDER
                 .comment("Impedir jogador preso de quebrar blocos")
-                .define("prevent_block_break", true);
+                .define("preventBlockBreak", true);
 
         PREVENT_BLOCK_PLACE = BUILDER
                 .comment("Impedir jogador preso de colocar blocos")
-                .define("prevent_block_place", true);
+                .define("preventBlockPlace", true);
 
         PREVENT_INTERACTIONS = BUILDER
                 .comment("Impedir jogador preso de interagir com blocos (baús, portas, etc)")
-                .define("prevent_interactions", true);
+                .define("preventInteractions", true);
 
         MAX_ARREST_TIME = BUILDER
                 .comment("Tempo máximo de prisão em minutos (0 = sem limite)")
-                .defineInRange("max_arrest_time", 0, 0, 100000);
+                .defineInRange("maxArrestTime", 0, 0, 100000);
 
         TELEPORT_ON_BLOCK_BREAK = BUILDER
                 .comment("Teleporta o preso para o oficial ao tentar quebrar blocos")
