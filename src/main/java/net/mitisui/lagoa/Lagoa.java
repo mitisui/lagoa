@@ -18,13 +18,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.mitisui.lagoa.commands.*;
-import net.mitisui.lagoa.events.AlgemaEvents;
-import net.mitisui.lagoa.events.GlobalEvents;
-import net.mitisui.lagoa.events.PistolaEvents;
-import net.mitisui.lagoa.events.SwordEvents;
+import net.mitisui.lagoa.events.*;
 import net.mitisui.lagoa.logger.LogWriter;
 import net.mitisui.lagoa.logger.ServerLoggerUtils;
 import net.mitisui.lagoa.mechanics.TeleportSystem;
+import net.mitisui.lagoa.menu.InvestigacaoMenu;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -44,8 +42,11 @@ public class Lagoa {
         MinecraftForge.EVENT_BUS.register(AlgemaEvents.class);
         MinecraftForge.EVENT_BUS.register(GlobalEvents.class);
         MinecraftForge.EVENT_BUS.register(SwordEvents.class);
+        MinecraftForge.EVENT_BUS.register(InvestigacaoEvents.class);
 
         MinecraftForge.EVENT_BUS.register(ServerLoggerUtils.class);
+
+
     }
 
     @SubscribeEvent
@@ -77,6 +78,7 @@ public class Lagoa {
         PistolaCommands.registrar(lagoaRoot);
         SwordsCommands.registrar(lagoaRoot);
         TeleportCommands.registrar(lagoaRoot);
+        InvestigacaoCommands.registrar(lagoaRoot);
 
         dispatcher.register(lagoaRoot);
 

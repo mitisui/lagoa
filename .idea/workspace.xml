@@ -1,11 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="RunManager" selected="Application.runClient">
-    <list>
-      <item itemvalue="Application.runClient" />
-      <item itemvalue="Application.runData" />
-      <item itemvalue="Application.runGameTestServer" />
-      <item itemvalue="Application.runServer" />
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="25918bad-1c75-443d-b4c8-270f2c1396d2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/InvestigacaoCommands.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/InvestigacaoEvents.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/menu/InvestigacaoMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lagoa-0.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lagoa-0.3.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Lagoa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Lagoa.java" afterDir="false" />
     </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="lagoa" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="lagoa" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="lagoa" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="lagoa" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="forgegradle runs" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;mitisui&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/mitisui/lagoa.git&quot;,
+    &quot;accountId&quot;: &quot;0f33baac-2b8b-41c3-9076-408d5b94dd25&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="382r6dZ3oHPo06jaJ3uWh4SZHWb" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.C:/Users/yoghj/OneDrive/Documentos/WB Games/lagoa [createMcpToSrg].executor": "Run",
+    "Gradle.lagoa [createMcpToSrg].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "develop",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task id="LOCAL-00001" summary="{-} Removendo o .idea&#10;&#10;Recomendo usar o ./gradlew pra qualquer execução ja que apresentou problemas de compatibilidade">
+      <option name="closed" value="true" />
+      <created>1767992052305</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1767992052305</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="25918bad-1c75-443d-b4c8-270f2c1396d2" name="Changes" comment="" />
+      <created>1768008337447</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1768008337447</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="{-} Removendo o .idea&#10;&#10;Recomendo usar o ./gradlew pra qualquer execução ja que apresentou problemas de compatibilidade" />
+    <option name="LAST_COMMIT_MESSAGE" value="{-} Removendo o .idea&#10;&#10;Recomendo usar o ./gradlew pra qualquer execução ja que apresentou problemas de compatibilidade" />
   </component>
 </project>
