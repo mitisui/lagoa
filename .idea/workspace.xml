@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25918bad-1c75-443d-b4c8-270f2c1396d2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/MagicBlockerCommands.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/mechanics/MagicBlockerZones.java" afterDir="false" />
+    <list default="true" id="25918bad-1c75-443d-b4c8-270f2c1396d2" name="Changes" comment="fix de algumas coisas e adição de outro comando de bloqueio de uso de magia em locais">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Lagoa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Lagoa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/AlgemaCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/AlgemaCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/AlgemaEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/AlgemaEvents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/mechanics/TeleportSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/mechanics/TeleportSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lagoa-0.3.3.jar" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +95,7 @@
   "keyToString": {
     "Gradle.C:/Users/yoghj/OneDrive/Documentos/WB Games/lagoa [createMcpToSrg].executor": "Run",
     "Gradle.lagoa [createMcpToSrg].executor": "Run",
+    "Gradle.lagoa [jar].executor": "Run",
     "Gradle.lagoa [runClient].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -109,7 +105,29 @@
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.lagoa [jar]">
+    <configuration name="lagoa [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="lagoa [runClient]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -145,6 +163,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.lagoa [jar]" />
         <item itemvalue="Gradle.lagoa [runClient]" />
       </list>
     </recent_temporary>
@@ -165,11 +184,28 @@
       <option name="presentableId" value="Default" />
       <updated>1768008337447</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fix de algumas coisas e adição de outro comando de bloqueio de uso de magia em locais">
+      <option name="closed" value="true" />
+      <created>1769228328199</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1769228328199</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix de algumas coisas e adição de outro comando de bloqueio de uso de magia em locais">
+      <option name="closed" value="true" />
+      <created>1769228333160</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1769228333160</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="{-} Removendo o .idea&#10;&#10;Recomendo usar o ./gradlew pra qualquer execução ja que apresentou problemas de compatibilidade" />
-    <option name="LAST_COMMIT_MESSAGE" value="{-} Removendo o .idea&#10;&#10;Recomendo usar o ./gradlew pra qualquer execução ja que apresentou problemas de compatibilidade" />
+    <MESSAGE value="fix de algumas coisas e adição de outro comando de bloqueio de uso de magia em locais" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix de algumas coisas e adição de outro comando de bloqueio de uso de magia em locais" />
   </component>
 </project>
