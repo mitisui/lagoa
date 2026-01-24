@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25918bad-1c75-443d-b4c8-270f2c1396d2" name="Changes" comment="fix de algumas coisas e adição de outro comando de bloqueio de uso de magia em locais">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lagoa-0.3.3.jar" beforeDir="false" />
+    <list default="true" id="25918bad-1c75-443d-b4c8-270f2c1396d2" name="Changes" comment="fix - adicionando nova versão no projeto">
+      <change beforePath="$PROJECT_DIR$/.idea/modules/lagoa.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/lagoa.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/lagoa.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/lagoa.test.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,9 +101,15 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/yoghj/IdeaProjects/lagoa",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\yoghj\IdeaProjects\lagoa" />
+    </key>
+  </component>
   <component name="RunManager" selected="Gradle.lagoa [jar]">
     <configuration name="lagoa [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -200,12 +205,21 @@
       <option name="project" value="LOCAL" />
       <updated>1769228333160</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix - adicionando nova versão no projeto">
+      <option name="closed" value="true" />
+      <created>1769228506690</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1769228506690</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="{-} Removendo o .idea&#10;&#10;Recomendo usar o ./gradlew pra qualquer execução ja que apresentou problemas de compatibilidade" />
     <MESSAGE value="fix de algumas coisas e adição de outro comando de bloqueio de uso de magia em locais" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix de algumas coisas e adição de outro comando de bloqueio de uso de magia em locais" />
+    <MESSAGE value="fix - adicionando nova versão no projeto" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix - adicionando nova versão no projeto" />
   </component>
 </project>
