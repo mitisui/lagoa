@@ -79,6 +79,7 @@ public class Lagoa {
         SwordsCommands.registrar(lagoaRoot);
         TeleportCommands.registrar(lagoaRoot);
         InvestigacaoCommands.registrar(lagoaRoot);
+        MagicBlockerCommands.registrar(lagoaRoot);
 
         dispatcher.register(lagoaRoot);
 

@@ -51,15 +51,13 @@ public class AlgemaEvents {
     public static void onInteract(PlayerInteractEvent.EntityInteract event) {
         ItemStack item = event.getItemStack();
 
-        // Verifica se é a algema via NBT
         if (item.hasTag() && item.getTag().getBoolean("IsAlgema")) {
             if (event.getTarget() instanceof Player target) {
                 Player officer = event.getEntity();
 
                 if (!event.getLevel().isClientSide) {
-                    // Lógica de prender/soltar
                     if (isArrested(target.getUUID())) {
-                        handleRelease((ServerPlayer) officer, (ServerPlayer) target);
+                        handleRelease((ServerPlayer) officer, (ServerPlayer) target, false);
                     } else {
                         handleArrest((ServerPlayer) officer, (ServerPlayer) target);
                     }
@@ -103,10 +101,8 @@ public class AlgemaEvents {
             return;
         }
 
-        // Registra a prisão
         ARRESTED_PLAYERS.put(target.getUUID(), new ArrestData(officer.getUUID()));
 
-        // Aplicar efeitos
         if (getEnableGlowing()) {
             target.addEffect(new MobEffectInstance(MobEffects.GLOWING, Integer.MAX_VALUE, 0, false, false));
         }
@@ -118,12 +114,15 @@ public class AlgemaEvents {
         nbt.putUUID("PrisonerUUID", target.getUUID());
         nbt.putString("PrisonerName", target.getName().getString());
 
-        // Mensagens
         officer.displayClientMessage(Component.literal("§aVocê prendeu " + target.getName().getString() + "!"), true);
         target.displayClientMessage(Component.literal("§cVocê foi preso por " + officer.getName().getString() + "!"), true);
     }
 
     public static void handleRelease(ServerPlayer officer, ServerPlayer target) {
+        handleRelease(officer, target, false);
+    }
+
+    public static void handleRelease(ServerPlayer officer, ServerPlayer target, boolean bypassOfficerCheck) {
         if (target == null) {
             officer.displayClientMessage(Component.literal("§cJogador não encontrado!"), true);
             return;
@@ -135,21 +134,17 @@ public class AlgemaEvents {
             return;
         }
 
-        // Verificar se é o oficial que prendeu
-        if (!data.officerUUID.equals(officer.getUUID())) {
+        if (!bypassOfficerCheck && !data.officerUUID.equals(officer.getUUID())) {
             officer.displayClientMessage(Component.literal("§cApenas o oficial que prendeu pode soltar!"), true);
             return;
         }
 
-        // Soltar jogador
         ARRESTED_PLAYERS.remove(target.getUUID());
 
-        // Remover efeitos
         target.removeEffect(MobEffects.GLOWING);
         target.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
         target.removeEffect(MobEffects.UNLUCK);
 
-        // Remover dados do NBT
         ItemStack algema = officer.getMainHandItem();
         if (algema.hasTag()) {
             CompoundTag nbt = algema.getTag();
@@ -157,9 +152,7 @@ public class AlgemaEvents {
             nbt.remove("PrisonerName");
         }
 
-        // Mensagens
         officer.displayClientMessage(Component.literal("§aVocê soltou " + target.getName().getString() + "!"),true);
-        target.displayClientMessage(Component.literal("§aVocê foi solto por " + officer.getName().getString() + "!"),true);
     }
 
     public static void handleTeleport(ServerPlayer officer, ServerPlayer target, BlockPos pos, String dimensionStr) {
@@ -188,9 +181,6 @@ public class AlgemaEvents {
         if (targetLevel != null) {
             target.teleportTo(targetLevel, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
                     target.getYRot(), target.getXRot());
-
-            officer.displayClientMessage(Component.literal("§aJogador teleportado!"), true);
-            target.displayClientMessage(Component.literal("§eVocê foi teleportado!"), true);
         }
     }
 
@@ -265,13 +255,11 @@ public class AlgemaEvents {
 
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        // Primeiro verifica se NÃO é uma algema
         ItemStack item = event.getItemStack();
         if (item.hasTag() && item.getTag().getBoolean("IsAlgema")) {
             return;
         }
 
-        // verifica se deve bloquear a interação
         if (Config.PREVENT_INTERACTIONS.get() && event.getEntity() instanceof ServerPlayer player) {
             if (ARRESTED_PLAYERS.containsKey(player.getUUID())) {
                 event.setCanceled(true);
@@ -280,7 +268,6 @@ public class AlgemaEvents {
         }
     }
 
-    // caso o player deslogue volte ao normal (caso ele use um stasis de peróla do ender pode utilizar disso para fugir)
     public static void onPlayerLogout(Player player) {
         ARRESTED_PLAYERS.remove(player.getUUID());
     }

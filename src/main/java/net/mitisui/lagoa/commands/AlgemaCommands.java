@@ -31,7 +31,8 @@ public class AlgemaCommands {
                                 .executes(context -> {
                                     ServerPlayer officer = context.getSource().getPlayerOrException();
                                     ServerPlayer target = EntityArgument.getPlayer(context, "jogador");
-                                    AlgemaEvents.handleRelease(officer, target);
+                                    // Passa true para bypassar a verificação de quem prendeu
+                                    AlgemaEvents.handleRelease(officer, target, true);
                                     return 1;
                                 })
                         )
@@ -66,13 +67,6 @@ public class AlgemaCommands {
                     display.putString("Name", Component.Serializer.toJson(
                             Component.literal("Algemas").withStyle(ChatFormatting.GOLD)
                     ));
-
-                    ListTag lore = new ListTag();
-                    lore.add(StringTag.valueOf(Component.Serializer.toJson(
-                            Component.literal("Item especial para prender infratores")
-                                    .withStyle(ChatFormatting.GRAY)
-                    )));
-                    display.put("Lore", lore);
                     nbt.put("display", display);
                     nbt.putBoolean("IsAlgema", true);
 

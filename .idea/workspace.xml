@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="25918bad-1c75-443d-b4c8-270f2c1396d2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/InvestigacaoCommands.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/InvestigacaoEvents.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/menu/InvestigacaoMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/MagicBlockerCommands.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/mechanics/MagicBlockerZones.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lagoa-0.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lagoa-0.3.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Lagoa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/Lagoa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/AlgemaCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/commands/AlgemaCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/AlgemaEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/events/AlgemaEvents.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/mechanics/TeleportSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mitisui/lagoa/mechanics/TeleportSystem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,13 +100,55 @@
   "keyToString": {
     "Gradle.C:/Users/yoghj/OneDrive/Documentos/WB Games/lagoa [createMcpToSrg].executor": "Run",
     "Gradle.lagoa [createMcpToSrg].executor": "Run",
+    "Gradle.lagoa [runClient].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "develop",
-    "kotlin-language-version-configured": "true"
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="lagoa [runClient]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="runClient" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="lagoa" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="lagoa" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.lagoa [runClient]" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="{-} Removendo o .idea&#10;&#10;Recomendo usar o ./gradlew pra qualquer execução ja que apresentou problemas de compatibilidade">
       <option name="closed" value="true" />

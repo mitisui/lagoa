@@ -7,6 +7,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
@@ -89,6 +91,11 @@ public class TeleportSystem {
         data.target.setNoGravity(true);
         data.target.setInvulnerable(true);
         data.target.noPhysics = true;
+        data.target.fallDistance = 0;
+
+        data.target.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 300, 255, false, false));
+        data.target.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 300, 0, false, false));
+        data.target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
 
         data.wasFlying = data.target.getAbilities().flying;
         if (!data.wasFlying && data.target.gameMode.getGameModeForPlayer() != GameType.SPECTATOR) {
@@ -109,6 +116,12 @@ public class TeleportSystem {
 
         data.startY = finalY + 20;
         data.target.noPhysics = true;
+        data.target.fallDistance = 0;
+
+        data.target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 80, 0, false, false));
+
+        level.playSound(null, data.destination.x, finalY + 20, data.destination.z,
+                SOUND_PHASE_3, SoundSource.PLAYERS, 1.0f, 0.8f);
     }
 
     public static void tick() {
@@ -186,8 +199,14 @@ public class TeleportSystem {
         double liftSpeed = 1.5;
         data.target.setDeltaMovement(0, liftSpeed, 0);
         data.target.hurtMarked = true;
+        data.target.fallDistance = 0;
 
         data.target.noPhysics = true;
+
+        if (data.phaseTick % 10 == 0) {
+            int duration = 40 + (data.phaseTick / 10) * 10; // Aumenta duração gradualmente
+            data.target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, duration, 0, false, false));
+        }
 
         DustParticleOptions dust = getParticle(data, 1.2f);
         for (int i = 0; i < 5; i++) {
@@ -200,13 +219,18 @@ public class TeleportSystem {
         ServerLevel level = (ServerLevel) data.target.level();
         Vec3 pos = data.target.position();
 
-        // Descer suavemente
+        data.target.fallDistance = 0;
+
         double targetY = data.destination.y;
         if (pos.y > targetY + 0.5) {
             data.target.setDeltaMovement(0, -0.5, 0);
             data.target.hurtMarked = true;
         } else {
             data.target.setDeltaMovement(0, 0, 0);
+        }
+
+        if (data.phaseTick % 20 == 0) {
+            data.target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, false, false));
         }
 
         DustParticleOptions dustOptions = new DustParticleOptions(data.particleColor, 1.5f);
@@ -252,6 +276,7 @@ public class TeleportSystem {
         ServerLevel level = (ServerLevel) data.target.level();
 
         data.target.teleportTo(data.destination.x, data.destination.y, data.destination.z);
+        data.target.fallDistance = 0;
 
         level.playSound(null, data.destination.x, data.destination.y, data.destination.z,
                 SOUND_PHASE_3, SoundSource.PLAYERS, 1.5f, 1.2f);
@@ -271,12 +296,13 @@ public class TeleportSystem {
             );
         }
 
-        // Flash de luz
         level.sendParticles(
                 ParticleTypes.FLASH,
                 data.destination.x, data.destination.y + 1, data.destination.z,
                 5, 0.5, 0.5, 0.5, 0.0
         );
+
+        data.target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
 
         cleanup(data);
     }
@@ -285,6 +311,10 @@ public class TeleportSystem {
         data.target.noPhysics = false;
         data.target.setInvulnerable(false);
         data.target.setNoGravity(false);
+        data.target.fallDistance = 0;
+
+        data.target.removeEffect(MobEffects.DAMAGE_RESISTANCE);
+        data.target.removeEffect(MobEffects.SLOW_FALLING);
 
         if (!data.wasFlying && data.target.gameMode.getGameModeForPlayer() != GameType.SPECTATOR) {
             data.target.getAbilities().mayfly = false;
