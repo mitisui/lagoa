@@ -1,6 +1,7 @@
 package net.mitisui.lagoa.mecanicas.algema;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -11,8 +12,10 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
@@ -26,6 +29,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class AlgemaEvents {
 
@@ -42,11 +46,29 @@ public class AlgemaEvents {
     }
 
     // -------------------------------------------------------------------------
-    // Utilitário
+    // Utilitários NBT — 1.21.1 usa DataComponents.CUSTOM_DATA
     // -------------------------------------------------------------------------
+
+    /** Lê o CustomData do item como CompoundTag. Retorna tag vazia se não existir. */
+    private static CompoundTag readNbt(ItemStack item) {
+        CustomData data = item.get(DataComponents.CUSTOM_DATA);
+        return data != null ? data.copyTag() : new CompoundTag();
+    }
+
+    /** Edita o CustomData do item via consumer, salvando de volta no componente. */
+    private static void editNbt(ItemStack item, Consumer<CompoundTag> editor) {
+        CompoundTag tag = readNbt(item);
+        editor.accept(tag);
+        item.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+    }
+
+    /** Remove uma chave do CustomData do item. */
+    private static void removeNbtKey(ItemStack item, String key) {
+        editNbt(item, tag -> tag.remove(key));
+    }
+
     private static boolean isAlgema(ItemStack item) {
-        CompoundTag tag = (CompoundTag) item.getTags();
-        return tag != null && tag.getBoolean("IsAlgema");
+        return readNbt(item).getBoolean("IsAlgema");
     }
 
     // -------------------------------------------------------------------------
@@ -77,8 +99,8 @@ public class AlgemaEvents {
         if (!(event.getEntity() instanceof ServerPlayer officer)) return;
         if (!isAlgema(event.getItemStack())) return;
 
-        CompoundTag nbt =(CompoundTag) event.getItemStack().getTags();
-        if (nbt == null || !nbt.contains("PrisonerUUID")) return;
+        CompoundTag nbt = readNbt(event.getItemStack());
+        if (!nbt.contains("PrisonerUUID")) return;
 
         UUID targetUUID = nbt.getUUID("PrisonerUUID");
         ServerPlayer target = officer.getServer().getPlayerList().getPlayer(targetUUID);
@@ -105,15 +127,20 @@ public class AlgemaEvents {
 
         ARRESTED_PLAYERS.put(target.getUUID(), new ArrestData(officer.getUUID()));
 
+        if (Config.ENABLE_GLOWING.get()) {
+            target.addEffect(new MobEffectInstance(MobEffects.GLOWING,
+                    Integer.MAX_VALUE, 0, false, false));
+        }
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
                 Integer.MAX_VALUE, Config.SLOWNESS_LEVEL.get(), false, false));
         target.addEffect(new MobEffectInstance(MobEffects.UNLUCK,
                 Integer.MAX_VALUE, 1, false, false));
 
-        // Grava UUID do preso na algema
-        CompoundTag nbt = officer.getMainHandItem().getOrCreateTag();
-        nbt.putUUID("PrisonerUUID", target.getUUID());
-        nbt.putString("PrisonerName", target.getName().getString());
+        // Grava UUID do preso no CustomData da algema
+        editNbt(officer.getMainHandItem(), nbt -> {
+            nbt.putUUID("PrisonerUUID", target.getUUID());
+            nbt.putString("PrisonerName", target.getName().getString());
+        });
 
         officer.displayClientMessage(
                 Component.literal("§aVocê prendeu §f" + target.getName().getString() + "§a!"), true);
@@ -149,12 +176,9 @@ public class AlgemaEvents {
         target.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
         target.removeEffect(MobEffects.UNLUCK);
 
-        // Limpa NBT da algema
-        CompoundTag nbt = officer.getMainHandItem().getTag();
-        if (nbt != null) {
-            nbt.remove("PrisonerUUID");
-            nbt.remove("PrisonerName");
-        }
+        // Limpa as chaves da algema
+        removeNbtKey(officer.getMainHandItem(), "PrisonerUUID");
+        removeNbtKey(officer.getMainHandItem(), "PrisonerName");
 
         officer.displayClientMessage(
                 Component.literal("§aVocê soltou §f" + target.getName().getString() + "§a!"), true);
@@ -222,7 +246,7 @@ public class AlgemaEvents {
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         if (event.getLevel().isClientSide()) return;
-        if (isAlgema(event.getItemStack())) return; // já tratado em onRightClickGround
+        if (isAlgema(event.getItemStack())) return;
         if (!Config.PREVENT_INTERACTIONS.get()) return;
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         if (!isArrested(player.getUUID())) return;
@@ -254,12 +278,14 @@ public class AlgemaEvents {
     }
 
     @SubscribeEvent
-    public static void onItemPickup(ItemEntityPickupEvent event) {
+    public static void onItemPickup(ItemEntityPickupEvent.Pre event) {
         if (!Config.PREVENT_ITEM_PICKUP.get()) return;
-        if (!(event.getEntity() instanceof ServerPlayer player)) return;
-        if (!isArrested(player.getUUID())) return;
 
-        event.setCanceled(true);
+        Player player = event.getPlayer();
+
+        if (isArrested(player.getUUID())) {
+            event.setCanPickup(TriState.FALSE);
+        }
     }
 
     @SubscribeEvent
@@ -267,10 +293,8 @@ public class AlgemaEvents {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         if (!isArrested(player.getUUID())) return;
 
-        // Zera o movimento horizontal
         player.setDeltaMovement(0, player.getDeltaMovement().y, 0);
     }
-
 
     @SubscribeEvent
     public static void onAttackEntity(AttackEntityEvent event) {
@@ -295,14 +319,11 @@ public class AlgemaEvents {
                 Component.literal("§cVocê não pode interagir enquanto está preso!"), true);
     }
 
-    // Impede que preso receba dano de outros players se o cargo tiver levaDano=false
-    // (opcional — funciona em conjunto com EvUtils)
     @SubscribeEvent
     public static void onDamageWhileArrested(LivingIncomingDamageEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer target)) return;
         if (!isArrested(target.getUUID())) return;
 
-        // Bloqueia apenas dano PvP enquanto preso (o oficial ainda pode machucar)
         if (event.getSource().getEntity() instanceof ServerPlayer attacker) {
             ArrestData data = ARRESTED_PLAYERS.get(target.getUUID());
             if (data != null && attacker.getUUID().equals(data.officerUUID)) return;

@@ -66,7 +66,7 @@ public class LCMDtempo {
 
                 // /lagoa tempo velocidade <multiplicador>
                 .then(Commands.literal("velocidade")
-                        .then(Commands.argument("multiplicador", FloatArgumentType.floatArg(0f, 10f))
+                        .then(Commands.argument("multiplicador", FloatArgumentType.floatArg(0f, 500f))
                                 .executes(ctx -> definirVelocidade(
                                         ctx.getSource(),
                                         FloatArgumentType.getFloat(ctx, "multiplicador")

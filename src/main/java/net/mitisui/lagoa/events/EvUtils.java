@@ -9,7 +9,7 @@ import net.mitisui.lagoa.mecanicas.area.AreaRegion;
 import net.mitisui.lagoa.mecanicas.cargos.Cargo;
 import net.mitisui.lagoa.mecanicas.cargos.CargoManager;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
@@ -17,11 +17,11 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 public class EvUtils {
     // MECÂNICA DE INVULNERABILIDADE
     @SubscribeEvent
-    public static void aoReceberDano(LivingDamageEvent event) {
+    public static void aoReceberDano(LivingIncomingDamageEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             Cargo cargo = CargoManager.getCargoDoPlayer(player.getUUID());
             if (cargo != null && !cargo.levaDano) {
-                event.getEntity().setInvulnerable(true);
+                event.setCanceled(true);
             }
         }
     }

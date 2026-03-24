@@ -120,6 +120,83 @@ public class Config {
                     .define("algema.prevent_attack", true);
 
     // =========================================================================
+    // PISTOLA
+    // =========================================================================
+
+    public static final ModConfigSpec.BooleanValue ENABLE_PISTOLA =
+            BUILDER
+                    .comment("Ativa ou desativa a pistola no servidor")
+                    .define("pistola.enable_pistola", true);
+
+    public static final ModConfigSpec.DoubleValue SHOT_DAMAGE =
+            BUILDER
+                    .comment("Dano do tiro da pistola (em pontos de vida, 2 = 1 coração)")
+                    .defineInRange("pistola.shot_damage", 6.0, 0.5, 40.0);
+
+    public static final ModConfigSpec.ConfigValue<String> BULLET_EFFECT =
+            BUILDER
+                    .comment("Efeito aplicado ao alvo ao ser atingido (ex: minecraft:slowness). Deixe vazio para nenhum.")
+                    .define("pistola.bullet_effect", "");
+
+    public static final ModConfigSpec.BooleanValue PISTOLA_RICOCHET_ENABLED =
+            BUILDER
+                    .comment("Ativa o ricochete na pistola")
+                    .define("pistola.ricochet_enabled", false);
+
+    public static final ModConfigSpec.IntValue PISTOLA_RICOCHET_COUNT =
+            BUILDER
+                    .comment("Quantas vezes o tiro pode ricochetear (requer ricochet_enabled = true)")
+                    .defineInRange("pistola.ricochet_count", 2, 0, 10);
+
+    public static final ModConfigSpec.DoubleValue PISTOLA_RANGE =
+            BUILDER
+                    .comment("Alcance do tiro principal em blocos")
+                    .defineInRange("pistola.range", 50.0, 1.0, 200.0);
+
+    // =========================================================================
+    // CORNETAS / TELEFONE
+    // =========================================================================
+
+    public static final ModConfigSpec.BooleanValue ENABLE_CORNETAS =
+            BUILDER
+                    .comment("Ativa a personalização de cornetas via bigorna")
+                    .define("itens.enable_cornetas", true);
+
+    public static final ModConfigSpec.IntValue CORNETA_CUSTO =
+            BUILDER
+                    .comment("Custo em níveis de experiência para criar uma corneta na bigorna")
+                    .defineInRange("itens.corneta_custo", 5, 0, 30);
+
+    public static final ModConfigSpec.BooleanValue ENABLE_TELEFONE =
+            BUILDER
+                    .comment("Ativa o item de telefone (vara de cenoura renomeada)")
+                    .define("itens.enable_telefone", true);
+
+    // =========================================================================
+    // DIVISOR DE ALMAS (ESPADA)
+    // =========================================================================
+
+    public static final ModConfigSpec.DoubleValue E1_RAYCAST_RANGE =
+            BUILDER.comment("Alcance do raio para detectar o alvo (Soul Division)")
+                    .defineInRange("espada.divisor_almas.range_raio", 15.0, 1.0, 64.0);
+
+    public static final ModConfigSpec.IntValue E1_HOMING_COOLDOWN =
+            BUILDER.comment("Cooldown da habilidade Soul Division (em ticks)")
+                    .defineInRange("espada.divisor_almas.cooldown_divisao", 200, 0, 72000);
+
+    public static final ModConfigSpec.DoubleValue E1_ATAQUE_AOE_AREA =
+            BUILDER.comment("Raio da explosão de almas (Ataque Massivo)")
+                    .defineInRange("espada.divisor_almas.aoe_raio", 10.0, 1.0, 32.0);
+
+    public static final ModConfigSpec.DoubleValue E1_ATAQUE_AOE_DANO =
+            BUILDER.comment("Dano causado pelo Ataque Massivo")
+                    .defineInRange("espada.divisor_almas.aoe_dano", 20.0, 0.0, 100.0);
+
+    public static final ModConfigSpec.IntValue E1_AOE_COOLDOWN =
+            BUILDER.comment("Cooldown do Ataque Massivo (em ticks)")
+                    .defineInRange("espada.divisor_almas.cooldown_aoe", 600, 0, 72000);
+
+    // =========================================================================
     // SPEC — deve ser o último campo estático
     // =========================================================================
 
